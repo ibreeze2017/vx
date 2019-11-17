@@ -11,6 +11,7 @@ export function guid() {
 
 /**
  * 管道处理
+ * return {any}
  */
 export function pipe(res:any) {
   const args = [].slice.call(arguments, 0);
