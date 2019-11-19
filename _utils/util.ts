@@ -13,28 +13,25 @@ export function guid() {
  * 管道处理
  * return {any}
  */
-export function pipe(res:any) {
+export function pipe(res: any, ...cb: Function[]) {
   const args = [].slice.call(arguments, 0);
   if (!args.length) {
     throw new Error('the first parameter must be pass in!');
   }
-  const cb = args.slice(1);
   if (!cb) {
     return res;
-  }
-  if (typeof cb === 'function') {
-    return cb(res);
   }
   if (!Array.isArray(cb) || !cb.length) {
     return res;
   }
-  let next;
+  let next: Function | null = null;
   while (cb.length) {
-    next = cb.shift();
+    next = <Function>cb.shift();
     if (typeof next === 'function') {
       break;
     }
   }
-  return pipe.apply(null, [(next ? next(res) : res)].concat(cb));
+  return pipe((next ? next(res) : res), ...cb);
+  // return pipe.apply(null, [(next ? next(res) : res)].concat(cb));
 }
 

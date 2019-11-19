@@ -21,7 +21,7 @@ export function hexIp(ipStr: string) {
  * @return {[string]}      [ip字符串]
  */
 export function getIPAddress(ip16: string) {
-  let temp: any = 0, ips = [];
+  let temp: any = 0, ips: number[] = [];
   for (let i = ip16.length - 1; i >= 2; i = i - 2) {
     temp = ip16[i - 1] + "" + ip16[i];
     temp = parseInt(temp, 16);
