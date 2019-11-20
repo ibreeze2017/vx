@@ -68,9 +68,9 @@ export function getTreeNodesOfDepth(treeList: ITreeNode[], depth: number = 0, ca
   return result;
 
   function loop(paramsTreeList: ITreeNode[], curDepth: number = -1) {
-    let nextDepth = curDepth++;
+    let nextDepth = ++curDepth;
     paramsTreeList.forEach(node => {
-      if (curDepth === depth) {
+      if (nextDepth === depth) {
         result.push(cb(node));
       }
       if (node.children && node.children.length) {
@@ -126,7 +126,7 @@ export function treeToMap(tree: ITreeNode[], cb?: (node: ITreeNode) => ITreeNode
  * @param {(item: T) => U} cb
  * @returns {MapType<U | T>}
  */
-export function listToMap<T=any, U=any>(list: T[], key: string, cb?: (item: T) => U) {
+export function listToMap<T = any, U = any>(list: T[], key: string, cb?: (item: T) => U) {
   const result: MapType<U | T> = {};
   list.forEach(item => {
     const itemKey = item[key];

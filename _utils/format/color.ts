@@ -24,7 +24,7 @@ export function getRandColor(alpha?: any) {
     result.push(Math.floor(Math.random() * 255));
   }
   if (alpha) {
-    if (!(typeof alpha != 'number' && alpha >= 0 && alpha <= 1)) {
+    if (!(typeof alpha != 'number' && alpha >= 0 && alpha <= 1) || alpha === true) {
       alpha = Math.random();
     }
     result.push(alpha);
@@ -39,21 +39,21 @@ export function getRandColor(alpha?: any) {
  * @return {[string]}        [十六进制颜色值]
  */
 export function toHex(rgbStr: string) {
-  const reg = /((\d(\.\d*)?){1,3}\,?)/ig;
+  const reg = /((\d(\.\d*)?){1,3},?)/ig;
   let temp = '', result = '#';
-  const cls = rgbStr.match(reg);
+  let cls = rgbStr.match(reg);
   if (!cls) {
     return false;
   }
   if (cls.length > 4) {
-    cls.slice(0, 3);
+    cls = cls.slice(0, 4);
   }
   const len = cls.length;
   for (let i = 0; i < len; i++) {
     if (i < 3) {
       temp = parseInt(cls[i]).toString(16);
     } else {
-      temp = Math.floor(+cls[i] * 255).toString(16);
+      temp = Math.floor((+cls[i]) * 255).toString(16);
     }
     if (temp.length < 2)
       temp = '0' + temp;
