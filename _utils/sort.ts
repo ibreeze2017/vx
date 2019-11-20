@@ -1,3 +1,9 @@
+/**
+ * 数组位置交换
+ * @param {number[]} arr
+ * @param {number} src
+ * @param {number} dst
+ */
 function swap(arr: number[], src: number, dst: number) {
   let temp = arr[src];
   arr[src] = arr[dst];

@@ -3,34 +3,34 @@
  * @return {[string]} [颜色值]
  */
 export function getRandHexColor() {
-  let result = "#";
-  for (var i = 0; i < 6; i++) {
-    result += parseInt(Math.random() * 16).toString(16);
+  let result = '#';
+  for (let i = 0; i < 6; i++) {
+    result += Math.floor(Math.random() * 16).toString(16);
   }
   return result;
 }
 
 /**
  * 获取随机的RGB【A】颜色
- * @param  {[boolean]} alpha [是否随机alpha通道]
- * @return {[string]}       [含RGB字符串]
+ * @param alpha [是否随机alpha通道]
+ * @returns {string} [含RGB字符串]
  */
-export function getRandColor(alpha) {
+export function getRandColor(alpha?: any) {
   if (alpha == undefined) {
     alpha = false;
   }
-  let result = [], mode = "rgb";
+  let result: number[] = [], mode = 'rgb';
   for (let i = 0; i < 3; i++) {
-    result.push(parseInt(Math.random() * 255));
+    result.push(Math.floor(Math.random() * 255));
   }
   if (alpha) {
-    if (!(typeof alpha != "number" && alpha >= 0 && alpha <= 1)) {
+    if (!(typeof alpha != 'number' && alpha >= 0 && alpha <= 1)) {
       alpha = Math.random();
     }
     result.push(alpha);
-    mode = "rgba";
+    mode = 'rgba';
   }
-  return mode + "(" + result.join(",") + ")";
+  return mode + '(' + result.join(',') + ')';
 }
 
 /**
@@ -38,9 +38,9 @@ export function getRandColor(alpha) {
  * @param  {[string]} rgbStr [rgb字符串]
  * @return {[string]}        [十六进制颜色值]
  */
-export function toHex(rgbStr) {
+export function toHex(rgbStr: string) {
   const reg = /((\d(\.\d*)?){1,3}\,?)/ig;
-  let temp = "", result = "#";
+  let temp = '', result = '#';
   const cls = rgbStr.match(reg);
   if (!cls) {
     return false;
@@ -53,10 +53,10 @@ export function toHex(rgbStr) {
     if (i < 3) {
       temp = parseInt(cls[i]).toString(16);
     } else {
-      temp = parseInt(+cls[i] * 255).toString(16);
+      temp = Math.floor(+cls[i] * 255).toString(16);
     }
     if (temp.length < 2)
-      temp = "0" + temp;
+      temp = '0' + temp;
     result += temp;
   }
   return result;
@@ -67,7 +67,7 @@ export function toHex(rgbStr) {
  * @param hexStr
  * @returns {*}
  */
-export function toRGB(hexStr) {
+export function toRGB(hexStr: string) {
   const start = hexStr.indexOf('#');
   let i = 0;
   if (start == 0) {
@@ -75,14 +75,14 @@ export function toRGB(hexStr) {
   } else if (start != -1) {
     return false;
   }
-  let store = [];
+  let store: number[] = [];
   for (i; i < hexStr.length - 1; i += 2) {
     store.push(parseInt(hexStr.substr(i, 2), 16));
   }
   let ct = 'rgb';
   if (store.length == 4) {
     const l = store.length - 1;
-    store[l] = (store[l] / 255).toFixed(2);
+    store[l] = (store[l] / 255);
     ct = 'rgba';
   }
   return ct + '(' + store.join(',') + ')';

@@ -1,6 +1,6 @@
-import color from './color';
-import math from './math';
-import ip from './ip';
-import net from './net';
+import * as color from './color';
+import * as math from './math';
+import * as ip from './ip';
+import * as net from './net';
 
-export {color, ip, math, net};
+export { color, ip, math, net };
