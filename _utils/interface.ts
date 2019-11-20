@@ -3,7 +3,7 @@ export type MapType<T> = { [index: string]: T };
 export interface ITreeNode {
   id: number;
   pid: number;
-  data: any;
+  data?: any;
   children: ITreeNode[];
 }
 
