@@ -1,0 +1,32 @@
+{
+  "name": "vx-utils",
+  "version": "1.0.0",
+  "description": "vx util lib",
+  "main": "index.ts",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.7.2"
+  },
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ibreeze2017/vx.git"
+  },
+  "keywords": [
+    "vx",
+    "utils",
+    "typescript"
+  ],
+  "author": "微风i",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ibreeze2017/vx/issues"
+  },
+  "homepage": "https://github.com/ibreeze2017/vx#readme"
+}
