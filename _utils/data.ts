@@ -1,18 +1,6 @@
 import { ITreeNode, MapType } from './interface';
 
 /**
- * 获取一个单键值对象
- * @param {string} key
- * @param value
- * @returns {MapType<any>}
- */
-export function getPlainObject(key: string, value: any) {
-  const o: MapType<any> = {};
-  o[key] = value;
-  return o;
-}
-
-/**
  * 复制TREE
  * @param {ITreeNode[]} sourceTreeList
  * @returns {ITreNode[]}
@@ -20,6 +8,18 @@ export function getPlainObject(key: string, value: any) {
 export function copyTreeList(sourceTreeList: ITreeNode[]) {
   return sourceTreeList.map(item => {
     return transformOutData(item, [], (tItem: ITreeNode, inner: ITreeNode[]) => transformOutItem(tItem, inner));
+  });
+}
+
+/**
+ * DFS遍历 Tree List
+ * @param {ITreeNode[]} sourceTreeList
+ * @param {(item: ITreeNode, inner: ITreeNode[]) => ITreeNode} callback
+ * @returns {any}
+ */
+export function treeTravel(sourceTreeList: ITreeNode[], callback?: (item: ITreeNode, inner: ITreeNode[]) => ITreeNode) {
+  return sourceTreeList.map(item => {
+    return transformOutData(item, [], callback);
   });
 }
 
@@ -100,7 +100,8 @@ export function treeToList(tree: ITreeNode[]) {
         getNode(childItem);
       });
     }
-    result.push(item);
+    const newNode: ITreeNode = Object.assign({}, item, { children: [] });
+    result.push(newNode);
   }
 }
 

@@ -16,7 +16,7 @@ export function getRandHexColor() {
  * @returns {string} [含RGB字符串]
  */
 export function getRandColor(alpha?: any) {
-  if (alpha == undefined) {
+  if (!alpha && alpha !== 0) {
     alpha = false;
   }
   let result: number[] = [], mode = 'rgb';
@@ -24,7 +24,9 @@ export function getRandColor(alpha?: any) {
     result.push(Math.floor(Math.random() * 255));
   }
   if (alpha) {
-    if (!(typeof alpha != 'number' && alpha >= 0 && alpha <= 1) || alpha === true) {
+    if (typeof alpha === 'number') {
+      alpha = alpha > 1 ? 1 : alpha < 0 ? 0 : alpha;
+    } else {
       alpha = Math.random();
     }
     result.push(alpha);
@@ -53,7 +55,7 @@ export function toHex(rgbStr: string) {
     if (i < 3) {
       temp = parseInt(cls[i]).toString(16);
     } else {
-      temp = Math.floor((+cls[i]) * 255).toString(16);
+      temp = Math.floor(parseFloat(cls[i]) * 255).toString(16);
     }
     if (temp.length < 2)
       temp = '0' + temp;
