@@ -20,8 +20,8 @@ const ipTool = {
   },
   //将十进制点分法ip转化为十六进制ip
   getHexIp: function(ipStr) {
-    var ips = null, result = '', temp: any = 0;
-    ips = ipStr.split('.');
+    let result = '', temp: any = 0;
+    const ips = ipStr.split('.');
     for (var i = ips.length - 1; i >= 0; i--) {
       temp = parseInt(ips[i], 10).toString(16);
       if (temp.length < 2) {
@@ -46,24 +46,27 @@ const ipTool = {
   },
   //获取网络类型id
   getIpTypeId: function(ipStr) {
-    var ips = null, result = '', temp = 0;
-    ips = ipStr.split('.');
-    var type = parseInt(ips[0]);
+    const ips = ipStr.split('.') as string[];
+    const type = parseInt(ips[0]);
     if (type > 0 && type < 128) {
       return 0;
-    } else if (type < 192) {
-      return 1;
-    } else if (type < 224) {
-      return 2;
-    } else if (type < 240) {
-      return 3;
-    } else if (type < 248) {
-      return 4;
-    } else if (type < 252) {
-      return 5;
-    } else {
-      return -1;
     }
+    if (type < 192) {
+      return 1;
+    }
+    if (type < 224) {
+      return 2;
+    }
+    if (type < 240) {
+      return 3;
+    }
+    if (type < 248) {
+      return 4;
+    }
+    if (type < 252) {
+      return 5;
+    }
+    return -1;
   },
   //获取IP地址类型
   getIpType: function(ip) {
@@ -72,7 +75,7 @@ const ipTool = {
   },
   //将十六进制人ip地址转化为十进制点分法形式
   getIpFromHex: function(ip32) {
-    var result = 0, temp: any = '', ips = [];
+    var result = 0, temp: any = '', ips: number[] = [];
     for (var i = ip32.length - 1; i >= 2; i = i - 2) {
       temp = ip32[i - 1] + '' + ip32[i];
       temp = parseInt(temp, 16);
@@ -88,10 +91,10 @@ const ipTool = {
     return result.substr(0, result.length - 1);
   },
   //据主机数确定子网掩码
-  getMaskFromCount: function(count, radix) {
+  getMaskFromCount: function(count, radix = 10) {
     var len = this.getCountLength(count);
     var fix = '', st;
-    var store = [];
+    var store: string[] = [];
     if ((!radix) || typeof radix !== 'number' || radix < 1) {
       radix = 10;
     }
@@ -124,7 +127,7 @@ const ipTool = {
   getAddr: function(ip, mask) {
     var ips = ip.split('.');
     var masks = mask.split('.');
-    var store = [];
+    var store: number[] = [];
     for (var i = 0; i < 4; i++) {
       store[i] = ips[i] & masks[i];
     }
@@ -133,15 +136,13 @@ const ipTool = {
   //获取广播地址
   getBroadcastAddr: function(ip, mask) {
     var host = this.getAddr(ip, mask);
-    var binHost = this.getBinIp(host).split('');
+    var binHost: string[] = this.getBinIp(host).split('');
     var hostLength = this.getHostLength(mask);
 
-    var store = '';
     for (var i = 31 - hostLength; i < 32; i++) {
       binHost[i] = '1';
     }
-    binHost = binHost.join('');
-    return this.getIpFromBin(binHost);
+    return this.getIpFromBin(binHost.join(''));
   },
   //获取子网掩码对应ip类型
   getMaskType: function(mask) {

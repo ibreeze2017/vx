@@ -197,3 +197,59 @@ export function toTree(data: ITreeNode[], pidKey = 'pid', pk = 'id', callback?: 
     return treeList;
   }
 }
+
+
+/**
+ * 获取树查找路径（检索项须唯一）
+ * @param d 树列表数据
+ * @param f 匹配方法 (n)=>boolean
+ * @param t 结果转换(n)=>any
+ * @returns {*}
+ */
+export function getTreeNodePath<T = ITreeNode>(d: ITreeNode[], f: (node: ITreeNode) => boolean, t?: (node: ITreeNode) => T) {
+  return ((e: boolean | null | number, v: any, r: T[]) => (v = (d) => (d.some(n => (n.children && n.children.length) ? (v(n.children), e ? r.push(t ? t(n) : n) : false) : (f(n) ? e = r.push(t ? t(n) : n) : false)), r))(d))(false, null, []);
+}
+
+
+/**
+ * 检索树过滤为子树
+ * @param data 搜索关键字
+ * @param filter 搜索过滤实现
+ */
+export function searchTree(data: ITreeNode[], filter: (key: ITreeNode) => boolean) {
+  const result: ITreeNode[] = [];
+  data.forEach(item => {
+    result.push(t(item, [] as ITreeNode[], filter));
+  });
+  return result.filter(filter);
+
+  function t(item: ITreeNode, inner: ITreeNode[], filter: (key: ITreeNode) => boolean) {
+    const { children } = Object.assign({}, item);
+    if (children && children.length) {
+      inner = children
+        .map(item => t(item, inner, filter))
+        .filter(filter);
+    }
+    const { children: ic, ...rest } = item;
+    return { ...rest, children: inner };
+  }
+
+}
+
+
+/**
+ * Tree转换为List
+ * @param data
+ * @param output
+ */
+export function flatTree(data: ITreeNode[], output: ITreeNode[] = []) {
+  for (let i = 0; i < data.length; i++) {
+    const node = data[i];
+    output.push(node);
+    if (node.children) {
+      flatTree(node.children, output);
+    }
+  }
+  return output;
+}
+
