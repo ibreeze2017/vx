@@ -139,6 +139,7 @@ const ipTool = {
     var binHost: string[] = this.getBinIp(host).split('');
     var hostLength = this.getHostLength(mask);
 
+
     for (var i = 31 - hostLength; i < 32; i++) {
       binHost[i] = '1';
     }
