@@ -1,8 +1,7 @@
 {
-  "name": "vx-utils",
+  "name": "@iovx/utils",
   "version": "1.0.0",
   "description": "vx util lib",
-  "main": "index.ts",
   "dependencies": {
   },
   "devDependencies": {
@@ -28,5 +27,16 @@
   "bugs": {
     "url": "https://github.com/ibreeze2017/vx/issues"
   },
-  "homepage": "https://github.com/ibreeze2017/vx#readme"
+  "homepage": "https://github.com/ibreeze2017/vx#readme",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "publishConfig": {
+    "url": " https://registry.npmjs.org/"
+  },
+  "files": [
+    "dist",
+    "lib",
+    "es"
+  ],
+  "typings": "lib/index.d.ts"
 }
